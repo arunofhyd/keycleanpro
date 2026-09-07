@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetSessionBtn = document.getElementById('resetSessionBtn');
 
     // Header Controls
-    const themeSelect = document.getElementById('themeSelect');
     const screenCleanBtn = document.getElementById('screenCleanBtn');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
 
@@ -58,27 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Setup & Initialization ────────────────────────────────────────────
     function init() {
-        initTheme();
         initSafetyMode();
         renderKeyboard();
         updateHud();
         initParticleCanvas();
         bindEvents();
-    }
-
-    // ── Theme Management ──────────────────────────────────────────────────
-    function initTheme() {
-        const savedTheme = localStorage.getItem('keyclean_theme') || 'cyberpunk';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        if (themeSelect) themeSelect.value = savedTheme;
-    }
-
-    if (themeSelect) {
-        themeSelect.addEventListener('change', (e) => {
-            const val = e.target.value;
-            document.documentElement.setAttribute('data-theme', val);
-            localStorage.setItem('keyclean_theme', val);
-        });
     }
 
     // ── Safety Mode & Unlock Controls ─────────────────────────────────────
