@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+  <defs>
+    <linearGradient id="aquaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+  </defs>
+  <!-- Aqua Squircle -->
+  <rect x="8" y="8" width="112" height="112" rx="28" fill="url(#aquaBg)"/>
+  
+  <!-- Crisp Pure White Keycap Shape -->
+  <rect x="28" y="28" width="72" height="72" rx="16" fill="#ffffff"/>
+  
+  <!-- Subtle Key Inset Dish -->
+  <rect x="34" y="34" width="60" height="60" rx="12" fill="#f0f9ff"/>
+  
+  <!-- Clean Drop & Sparkle Motif (Sky Blue) -->
+  <path d="M64 45 C64 54 68 59 78 59 C68 59 64 64 64 73 C64 64 60 59 50 59 C60 59 64 54 64 45 Z" fill="#0284c7"/>
+  <circle cx="80" cy="45" r="3.5" fill="#38bdf8"/>
+</svg>

@@ -1,24 +1,19 @@
 # KeyClean Pro ⌨️✨
 
-> The ultimate online keyboard & screen cleaning studio. Lock keystrokes safely, detect multi-key rollover, inspect screen dust, and wipe your laptop or mechanical keyboard without typing garbage.
+> The professional online keyboard & screen cleaning studio. Safely freeze keystrokes, benchmark multi-key rollover, inspect screen dust, and clean your laptop or mechanical keyboard without typing junk.
 
-Recreated and substantially elevated from [keyboardcleaner.netlify.app](https://keyboardcleaner.netlify.app).
+**Live App**: [https://keycleanpro.vercel.app](https://keycleanpro.vercel.app)
 
 ---
 
-## 🚀 What Makes KeyClean Pro Better
+## 🚀 Key Features
 
-| Feature | Original Site | **KeyClean Pro** |
-| :--- | :--- | :--- |
-| **Lock / Unlock Options** | Single basic button | **1-Click Fast Toggle (Default)** with optional **Hold-to-Unlock (2s radial gauge)** for aggressive wiping |
-| **Visual Aesthetics** | Plain 2D buttons with basic dark background | **Cyber-Clean Glassmorphism**, 3D chamfered mechanical keycaps, ambient floating dust motes |
-| **Keyboard Layouts** | Basic 60% Mac / Windows | **MacBook / Apple Magic Keyboard**, **Windows Laptop / PC**, and **100% Full-Size Desktop (with Numpad)** |
-| **Rollover & Anti-Ghosting** | Single total counter | **Real-time simultaneous keypress meter** & peak rollover benchmark |
-| **Screen Dust Mode** | None | **Screen Dust & Smudge Finder**: Pure OLED Black, Pure White, Matrix Green, and High-Contrast Grid |
-| **Cleaning Heatmap** | None | **Visual wipe intensity overlay** (highlights frequently scrubbed keys vs missed keys) |
-| **Fullscreen Protection** | None (wiping near top risks closing tabs) | **One-click Fullscreen API lock** |
-| **Celebration** | Basic script | **High-FPS canvas confetti cannon** on 100% board wipe completion |
-| **Offline Performance** | External ad scripts & remote CDN assets | **100% self-contained client-side**, zero latency, works completely offline |
+- **Safe Input Lock & 1-Click Fast Toggle**: Instant 1-click lock and unlock by default, plus an optional 2-second hold protection mode for aggressive scrubbing.
+- **Multi-Layout Support**: Native layouts for **MacBook / Apple Magic Keyboard**, **Windows Laptop / PC**, and **100% Full-Size Desktop** (with Numpad).
+- **Screen Dust & Smudge Inspector**: Dedicated inspection overlays (OLED Pure Black, Clean White, Matrix Green, Alignment Grid) to spot display smudges and dust while wiping.
+- **Simultaneous Pressure (Rollover) Gauge**: Real-time multi-key rollover benchmark measuring cloth contact pressure and anti-ghosting matrix.
+- **Cleaning Heatmap**: Live visual intensity map showing frequently scrubbed keys versus missed spots.
+- **Zero Install, 100% Private**: Runs entirely client-side with zero permissions and zero telemetry sent to servers. Works completely offline.
 
 ---
 
@@ -26,6 +21,8 @@ Recreated and substantially elevated from [keyboardcleaner.netlify.app](https://
 
 ```
 keyboard-cleaner-pro/
+├── assets/              # High-res SVG and PNG vector branding & icons
+├── favicon.svg          # Modern browser favicon
 ├── index.html           # Semantic HTML5, Schema.org SEO structured data, accessibility
 ├── css/
 │   ├── style.css        # Bespoke design system: 3D keycaps, glassmorphism, responsive HUD
@@ -39,16 +36,11 @@ keyboard-cleaner-pro/
 
 ---
 
-## 🏃 Running Locally
+## 🔒 100% Private & Zero Permissions
 
-Since KeyClean Pro is built with vanilla HTML, CSS, and modern JavaScript, no build step or package installation is required.
-
-### Quick Start with Python:
-```bash
-cd /Users/arunthomas/.gemini/antigravity-ide/scratch/keyboard-cleaner-pro
-python3 -m http.server 8080
-```
-Open `http://localhost:8080` in your web browser.
+- **No installations or extensions required**: Runs entirely within modern web browsers (Chrome, Safari, Firefox, Edge, Opera).
+- **Zero data transmission**: All keystrokes, wiping telemetry, and timer metrics stay strictly inside your local browser memory.
+- **Works completely offline**: Can be added to your home screen or pinned as a standalone PWA / Web App.
 
 ---
 
