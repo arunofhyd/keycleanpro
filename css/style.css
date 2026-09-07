@@ -132,6 +132,14 @@ body.locked {
     filter: drop-shadow(0 0 10px var(--accent-cyan));
 }
 
+.brand-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    object-fit: contain;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
 .brand-title {
     font-size: 1.25rem;
     font-weight: 800;
