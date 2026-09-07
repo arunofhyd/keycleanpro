@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="KeyClean Pro – The ultimate online keyboard cleaner & screen sanitizer. Freeze keystrokes, detect multi-key rollover, inspect screen dust, and wipe your laptop safely without typing.">
+    <meta name="keywords" content="keyboard cleaner, keyboard cleaner tool, keyboard lock, macbook keyboard cleaner, laptop cleaner, screen dust inspection, key rollover tester, disable keyboard for cleaning">
+    <title>KeyClean Pro – Ultimate Online Keyboard & Screen Cleaning Studio</title>
+
+    <!-- Open Graph & Social Cards -->
+    <meta property="og:title" content="KeyClean Pro – Ultimate Online Keyboard Cleaner">
+    <meta property="og:description" content="Lock and freeze your keyboard safely to wipe keys, clean screens, and test rollover without typing junk.">
+    <meta property="og:type" content="website">
+
+    <!-- Icons & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Schema.org Application Metadata -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "KeyClean Pro",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "macOS, Windows, Linux, ChromeOS",
+      "description": "Professional web utility to safely freeze keyboard inputs, track cleaning telemetry, inspect screen smudges, and sanitize laptop or desktop keyboards.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- Schema.org FAQ Metadata -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does KeyClean Pro safely lock my keyboard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "KeyClean Pro uses high-priority capture-phase browser event interceptors to suppress all keystrokes, OS shortcut attempts, and context menus, allowing you to wipe keys without typing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is Hold-to-Unlock safer than a standard button?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When vigorously scrubbing a keyboard or trackpad, an accidental finger or cloth swipe can click a standard button and unlock the keyboard mid-clean. Hold-to-Unlock requires a deliberate 2-second press to disengage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Screen Dust & Smudge Inspection Mode?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It switches your monitor into pure pitch-black, brilliant clean white, or high-contrast grids to highlight fingerprints, smudges, and dust particles while wiping your display."
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Ambient Gradient Mesh & Particle Canvas -->
+    <div class="ambient-mesh" aria-hidden="true">
+        <div class="mesh-blob mesh-blob-1"></div>
+        <div class="mesh-blob mesh-blob-2"></div>
+        <div class="mesh-blob mesh-blob-3"></div>
+    </div>
+    <canvas id="particleCanvas" aria-hidden="true"></canvas>
+
+    <!-- Main Container -->
+    <main class="app-container">
+
+        <!-- Top Header & Controls -->
+        <header class="header-bar" role="banner">
+            <div class="brand">
+                <i class="fa-solid fa-sparkles brand-icon"></i>
+                <div class="brand-title">
+                    KeyClean <span class="pro-badge">PRO</span>
+                </div>
+            </div>
+
+            <nav class="header-actions" aria-label="Tool options">
+
+                <!-- Theme Switcher -->
+                <div class="action-btn" title="Color Theme">
+                    <i class="fa-solid fa-palette"></i>
+                    <select id="themeSelect" class="action-select" aria-label="Select Theme">
+                        <option value="cyberpunk">Cyber Neon</option>
+                        <option value="midnight">OLED Midnight</option>
+                        <option value="emerald">Emerald Matrix</option>
+                    </select>
+                </div>
+
+                <!-- Screen Cleaner Mode -->
+                <button id="screenCleanBtn" class="action-btn" title="Screen Dust & Smudge Finder" aria-label="Screen Dust Finder">
+                    <i class="fa-solid fa-display"></i>
+                    <span>Screen Dust Mode</span>
+                </button>
+
+                <!-- Fullscreen Toggle -->
+                <button id="fullscreenBtn" class="action-btn" title="Toggle Fullscreen" aria-label="Toggle Fullscreen">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Hero Section & Lock Console -->
+        <section class="hero-deck" aria-labelledby="mainTitle">
+            <h1 id="mainTitle">Online Keyboard & Screen Cleaner</h1>
+            <p id="heroSubtitle" class="hero-subtitle">Ready to clean. Lock your keyboard to start.</p>
+
+            <!-- Big Interactive Lock/Unlock Core -->
+            <div class="lock-core-wrapper">
+                <svg class="lock-svg-ring" viewBox="0 0 234 234" aria-hidden="true">
+                    <circle class="lock-ring-bg" cx="117" cy="117" r="105"></circle>
+                    <circle id="lockRingProgress" class="lock-ring-progress" cx="117" cy="117" r="105"></circle>
+                </svg>
+
+                <button id="lockCoreBtn" class="lock-core-btn" aria-label="Toggle Keyboard Lock">
+                    <div class="lock-icon-box">
+                        <i id="lockIcon" class="fa-solid fa-lock-open"></i>
+                    </div>
+                    <span id="lockLabel" class="lock-btn-label">LOCK</span>
+                    <span id="lockSublabel" class="lock-btn-sublabel">Click to Start</span>
+                </button>
+            </div>
+
+            <!-- Safety Mode Switcher -->
+            <div class="safety-controls">
+                <div class="mode-pill-group" role="radiogroup" aria-label="Unlock Protection Mode">
+                    <button class="mode-pill active" data-mode="click" role="radio" aria-checked="true">
+                        <i class="fa-solid fa-bolt mr-1"></i> 1-Click Toggle
+                    </button>
+                    <button class="mode-pill" data-mode="hold" role="radio" aria-checked="false">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> Hold 2s (Safe)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real-Time Telemetry HUD -->
+        <section class="telemetry-hud" aria-label="Cleaning Telemetry">
+            <!-- Coverage / Keys Cleaned -->
+            <div class="hud-card">
+                <div class="hud-header">
+                    <span class="hud-title">Keys Cleaned</span>
+                    <i class="fa-solid fa-check-double hud-icon"></i>
+                </div>
+                <div class="hud-value">
+                    <span id="hudCleanedCount">0</span><span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">/<span id="hudTotalKeys">78</span></span>
+                </div>
+                <div class="hud-footer">
+                    <span id="hudCoveragePct">0%</span> coverage
+                </div>
+                <div class="mini-progress-track">
+                    <div id="hudProgressFill" class="mini-progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Rollover / Simultaneous Pressure -->
+            <div class="hud-card">
+                <div class="hud-header">
+                    <span class="hud-title">Simultaneous Pressure</span>
+                    <i class="fa-solid fa-hand-fist hud-icon"></i>
+                </div>
+                <div class="hud-value">
+                    <span id="hudCurrentRollover">0</span> <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-muted);">keys</span>
+                </div>
+                <div class="hud-footer">
+                    Peak Rollover: <strong id="hudPeakRollover" style="color: var(--accent-cyan); margin-left: 4px;">0</strong>
+                </div>
+            </div>
+
+            <!-- Cleaning Timer -->
+            <div class="hud-card">
+                <div class="hud-header">
+                    <span class="hud-title">Session Time</span>
+                    <i class="fa-regular fa-clock hud-icon"></i>
+                </div>
+                <div class="hud-value" id="hudTimer">00:00</div>
+                <div class="hud-footer">Active Sanitization</div>
+            </div>
+
+            <!-- Scrub Velocity -->
+            <div class="hud-card">
+                <div class="hud-header">
+                    <span class="hud-title">Total Scrub Wipes</span>
+                    <i class="fa-solid fa-wind hud-icon"></i>
+                </div>
+                <div class="hud-value" id="hudTotalWipes">0</div>
+                <div class="hud-footer">Total Registered Keystrokes</div>
+            </div>
+        </section>
+
+        <!-- Virtual Keyboard Canvas Deck -->
+        <section class="keyboard-wrapper" aria-label="Interactive Virtual Keyboard">
+            <div class="keyboard-header-bar">
+                <div class="layout-selector" role="tablist" aria-label="Keyboard Layouts">
+                    <button class="layout-tab active" data-layout="mac" role="tab" aria-selected="true">
+                        <i class="fa-brands fa-apple mr-1"></i> MacBook / Magic
+                    </button>
+                    <button class="layout-tab" data-layout="windows" role="tab" aria-selected="false">
+                        <i class="fa-brands fa-windows mr-1"></i> Windows Laptop
+                    </button>
+                    <button class="layout-tab" data-layout="fullsize" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-keyboard mr-1"></i> 100% Full-Size (Numpad)
+                    </button>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button id="toggleHeatmapBtn" class="action-btn" title="Toggle Scrubbing Heatmap">
+                        <i class="fa-solid fa-fire"></i>
+                        <span>Heatmap</span>
+                    </button>
+                    <button id="resetSessionBtn" class="action-btn" title="Reset Cleaned Keys & Counters">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Render Target for Dynamic Keys Matrix -->
+            <div id="keyboardDeck" class="keyboard-deck"></div>
+        </section>
+
+        <!-- SEO & Knowledge Section -->
+        <section class="guide-section">
+            <article class="guide-card">
+                <h2><i class="fa-solid fa-spray-can-sparkles" style="color: var(--accent-cyan);"></i> Why Use KeyClean Pro?</h2>
+                <p>
+                    Wiping down your laptop or mechanical keyboard while your computer is on usually results in accidental keystrokes, unintended shortcut executions, closed browser tabs, or corrupted files. 
+                    <strong>KeyClean Pro</strong> safely captures and silences all keystrokes in the browser without requiring any app installations or system restarts.
+                </p>
+                <div class="step-list">
+                    <div class="step-item">
+                        <span class="step-num">1</span>
+                        <div><strong>Lock Input:</strong> Click the central core button or switch to fullscreen mode to eliminate accidental tab-clicks.</div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">2</span>
+                        <div><strong>Scrub Freely:</strong> Use a microfiber cloth with 70% isopropyl alcohol. Watch keys light up and clear dust in real time.</div>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">3</span>
+                        <div><strong>Hold to Unlock:</strong> When done, press and hold the button for 2 seconds to safely disengage.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Pro Sanitization Guide -->
+            <article class="guide-card">
+                <h2><i class="fa-solid fa-book-medical" style="color: var(--accent-emerald);"></i> Pro Keyboard Cleaning & Sanitization Guide</h2>
+                <h3>1. Recommended Disinfectant</h3>
+                <p>
+                    Use <strong>70% Isopropyl Alcohol (IPA)</strong> lightly misted onto a lint-free microfiber cloth. Never pour or spray liquids directly onto keyboard keys or laptop chassis.
+                </p>
+
+                <h3>2. Dealing with Sticky Keys & Spills</h3>
+                <p>
+                    If a switch is sticky, unplug the keyboard immediately. For mechanical keyboards, use a keycap puller to remove the keycap and clean the stem housing with a cotton swab dampened with 99% alcohol.
+                </p>
+
+                <h3>3. Compressed Air Technique</h3>
+                <p>
+                    Hold the compressed air canister upright at a 45-degree angle. Blow in short bursts moving row by row to prevent moisture discharge into switch mechanisms.
+                </p>
+            </article>
+
+            <!-- Interactive FAQ Accordion -->
+            <article class="guide-card">
+                <h2><i class="fa-solid fa-circle-question" style="color: var(--accent-purple);"></i> Frequently Asked Questions</h2>
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Does KeyClean Pro require downloading an app or extension?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            No! KeyClean Pro is 100% web-based. It runs client-side in Safari, Chrome, Edge, and Firefox without requiring software downloads, admin rights, or browser extensions.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How does Hold-to-Unlock prevent accidental unlocking?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Standard online cleaners unlock with a single inadvertent click. During heavy wiping, a cloth or palm can easily hit the mouse button. Our 2-second hold gauge ensures only intentional unlocks are registered.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Does it work on MacBook Pro and Windows laptops?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Yes! KeyClean Pro includes native layouts for macOS (Command ⌘, Option ⌥) and Windows/PC laptops, plus a complete 100% full-size keyboard with numpad.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is Simultaneous Pressure (Rollover)?</span>
+                            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+                        </div>
+                        <div class="faq-answer">
+                            When wiping multiple keys simultaneously with a cloth, your keyboard registers multiple inputs at once. KeyClean Pro measures multi-key rollover in real-time to benchmark your keyboard's anti-ghosting matrix.
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+    </main>
+
+    <!-- Screen Cleaning / Dust Inspection Modal Overlay -->
+    <div id="screenOverlay" class="screen-inspection-overlay" role="dialog" aria-modal="true" aria-label="Screen Dust Inspection Mode">
+        <div class="screen-toolbar">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #fff; margin-right: 0.5rem;">Dust Inspection:</span>
+            <button class="screen-color-btn active" data-color="#000000" style="background: #000000;" title="OLED Pure Black"></button>
+            <button class="screen-color-btn" data-color="#ffffff" style="background: #ffffff;" title="Clean White"></button>
+            <button class="screen-color-btn" data-color="#10b981" style="background: #10b981;" title="Matrix Green"></button>
+            <button class="screen-color-btn" data-color="grid" style="background: #1e293b;" title="High-Contrast Alignment Grid"></button>
+            <button id="screenExitBtn" class="screen-exit-btn">Exit (ESC)</button>
+        </div>
+    </div>
+
+    <!-- Application Scripts -->
+    <script src="js/layouts.js"></script>
+    <script src="js/cleaner.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
